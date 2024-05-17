@@ -42,6 +42,50 @@ public class VSCWindow extends JFrame {
         
         mainPanel.add(sidePanel, BorderLayout.WEST);
         
+
+    // Panel central (área de trabajo)
+    JTextArea textArea = new JTextArea();
+    JScrollPane scrollPane = new JScrollPane(textArea);
+    mainPanel.add(scrollPane, BorderLayout.CENTER);
+    
+    add(mainPanel);
+    
+    // Acciones para los elementos del menú
+    openFolderItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = fileChooser.showOpenDialog(VSCWindow.this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                // Abrir carpeta seleccionada
+                textArea.setText("Opened Folder: " + fileChooser.getSelectedFile().getAbsolutePath());
+            }
+        }
+    });
+    
+    openFileItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(VSCWindow.this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                // Abrir archivo seleccionado
+                textArea.setText("Opened File: " + fileChooser.getSelectedFile().getAbsolutePath());
+            }
+        }
+    });
+}
+
+public static void main(String[] args) {
+    SwingUtilities.invokeLater(new Runnable() {
+        @Override
+        public void run() {
+            new VSCWindow().setVisible(true);
+        }
+    });
+}
+
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
